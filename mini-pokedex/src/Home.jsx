@@ -7,9 +7,10 @@ import React from 'react';
 const Home = () => {
   const [page, setPage] = useState(0);
   const offset = page * 20;
+
   const fetchPokemon = async offset => {
     const response = await axios.get(
-      'https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset}'
+      `https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset}`
     );
     return response.data;
   };
@@ -18,6 +19,7 @@ const Home = () => {
     queryKey: ['pokemon', offset],
     queryFn: () => fetchPokemon(offset),
   });
+
   if (isLoading) return <p>Loading. . .</p>;
   if (isError) return <p>Something went wrong! </p>;
 
@@ -26,7 +28,7 @@ const Home = () => {
       <ul>
         {data.results.map(pokemon => (
           <li key={pokemon.name}>
-            <Link to={'/pokemon/${pokemon.name}'}>{pokemon.name}</Link>
+            <Link to={`/pokemon/${pokemon.name}`}>{pokemon.name}</Link>
           </li>
         ))}
       </ul>
